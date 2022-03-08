@@ -2,7 +2,7 @@ const path = require("path");
 const semver = require("semver");
 
 const { log } = require("./logger");
-const { projectRoot } = require("./paths");
+const { projectRoot, cliPath } = require("./paths");
 
 let envLoaded = false;
 const CRA_LATEST_SUPPORTED_MAJOR_VERSION = "4.0.0";
@@ -21,15 +21,19 @@ function resolveConfigFilePath(cracoConfig, fileName) {
 }
 
 function resolveConfigFilePathInner(cracoConfig, fileName) {
-    return require.resolve(path.join(cracoConfig.reactScriptsVersion, "config", fileName), { paths: [projectRoot] });
+    return require.resolve(path.join(cracoConfig.reactScriptsVersion, "config", fileName), {
+        paths: [projectRoot, cliPath]
+    });
 }
 
 function resolveScriptsFilePath(cracoConfig, fileName) {
-    return require.resolve(path.join(cracoConfig.reactScriptsVersion, "scripts", fileName), { paths: [projectRoot] });
+    return require.resolve(path.join(cracoConfig.reactScriptsVersion, "scripts", fileName), {
+        paths: [projectRoot, cliPath]
+    });
 }
 
 function resolveReactDevUtilsPath(fileName) {
-    return require.resolve(path.join("react-dev-utils", fileName), { paths: [projectRoot] });
+    return require.resolve(path.join("react-dev-utils", fileName), { paths: [projectRoot, cliPath] });
 }
 
 function overrideModule(modulePath, newModule) {
@@ -39,7 +43,9 @@ function overrideModule(modulePath, newModule) {
 }
 
 function resolvePackageJson(cracoConfig) {
-    return require.resolve(path.join(cracoConfig.reactScriptsVersion, "package.json"), { paths: [projectRoot] });
+    return require.resolve(path.join(cracoConfig.reactScriptsVersion, "package.json"), {
+        paths: [projectRoot, cliPath]
+    });
 }
 
 function getReactScriptVersion(cracoConfig) {
