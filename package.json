@@ -1,5 +1,5 @@
 {
-    "name": "craco",
+    "name": "@xkool/craco",
     "private": true,
     "scripts": {
         "publish": "lerna publish --progress --force-publish",
