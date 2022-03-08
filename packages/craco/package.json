@@ -1,5 +1,5 @@
 {
-    "name": "@craco/craco",
+    "name": "@xkool/craco",
     "description": "Create React App Configuration Override, an easy and comprehensible configuration layer for create-react-app.",
     "version": "6.4.5",
     "scripts": {},
@@ -47,5 +47,5 @@
         "semver": "^7.3.2",
         "webpack-merge": "^4.2.2"
     },
-    "gitHead": "a1da6911f6df9b018c060fe70c8029146142bcdb"
+    "gitHead": "745b3a7e7df76029e93d8b8ca764823da2dd0b6d"
 }
