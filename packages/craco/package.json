@@ -1,7 +1,7 @@
 {
     "name": "@xkool/craco",
     "description": "Create React App Configuration Override, an easy and comprehensible configuration layer for create-react-app.",
-    "version": "6.4.5",
+    "version": "6.4.6",
     "scripts": {},
     "publishConfig": {
         "access": "public"
