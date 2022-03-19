@@ -15,27 +15,34 @@ switch (script) {
         const scriptArgs = args.slice(scriptIndex + 1);
         const processArgs = nodeArgs.concat(scriptPath).concat(scriptArgs);
 
-        const child = spawn.sync("node", processArgs, { stdio: "inherit" });
+        const child = spawn("node", processArgs, { stdio: "inherit" });
 
-        if (child.signal) {
-            if (child.signal === "SIGKILL") {
-                console.log(`
-                    The build failed because the process exited too early.
-                    This probably means the system ran out of memory or someone called
-                    \`kill -9\` on the process.
-                `);
-            } else if (child.signal === "SIGTERM") {
-                console.log(`
-                    The build failed because the process exited too early.
-                    Someone might have called  \`kill\` or \`killall\`, or the system could
-                    be shutting down.
-                `);
-            }
+        process.send &&
+            process.send({
+                pid: child.pid
+            });
 
-            process.exit(1);
-        }
+        child.on("exit", () => {
+            console.log("child exit");
+        });
 
-        process.exit(child.status);
+        process.on("exit", () => {
+            console.log("craco进程已退出！");
+            process.send &&
+                process.send({
+                    exit: true
+                });
+        });
+
+        child.on("close", () => {
+            console.log("child close");
+        });
+
+        ["SIGKILL", "SIGTERM"].forEach(signal => {
+            process.on(signal, () => {
+                process.exit(1);
+            });
+        });
         break;
     }
     default:
