@@ -38,7 +38,7 @@ switch (script) {
             console.log("child close");
         });
 
-        ["SIGKILL", "SIGTERM"].forEach(signal => {
+        ["SIGINT", "SIGTERM"].forEach(signal => {
             process.on(signal, () => {
                 process.exit(1);
             });
